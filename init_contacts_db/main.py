@@ -40,26 +40,26 @@ def start():
 
 def preprocessing():
     data = []
-    with open('/Users/micah/Desktop/CS6360/contact_list/Contacts.csv', 'rt') as f:
+    with open('/Users/micah/Desktop/CS6360_GUI/Contacts.csv', 'rt') as f:
         for idx, line in enumerate(f):
             if idx < 2:
                 continue
             i = line.rstrip().split(',')
             data.append({
                 'contact_id': i[0],
-                'first_name': i[1],
-                'middle_name': i[2],
-                'last_name': i[3],
+                'first_name': i[1].lower(),
+                'middle_name': i[2].lower(),
+                'last_name': i[3].lower(),
                 'home_phone': i[4],
                 'cell_phone': i[5],
-                'home_address': i[6],
-                'home_city': i[7],
-                'home_state': i[8],
+                'home_address': i[6].lower(),
+                'home_city': i[7].lower(),
+                'home_state': i[8].lower(),
                 'home_zip': i[9],
                 'work_phone': i[10],
-                'work_address': i[11],
-                'work_city': i[12],
-                'work_state': i[13],
+                'work_address': i[11].lower(),
+                'work_city': i[12].lower(),
+                'work_state': i[13].lower(),
                 'work_zip': i[14],
                 'birth_date': i[15]
             })

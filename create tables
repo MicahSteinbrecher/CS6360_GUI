@@ -1,0 +1,47 @@
+CONTACT
+Contact_id Fname Mname Lname
+
+CREATE TABLE contact (
+	Contact_id serial primary key,
+	Fname varchar(25),
+	Mname varchar(25),
+	Lname varchar(25),
+);
+
+ADDRESS
+Address_id Contact_id Address_type Address City State Zip
+
+CREATE TABLE address (
+	Address_id serial primary key,
+	Contact_id integer REFERENCES contact,
+	Address_type varchar(25),
+	Address varchar(25),
+	City varchar(25),
+	State varchar(25),
+	Zip integer
+);
+
+PHONE
+Phone_id Contact_id Area_code Number
+
+CREATE TABLE phone (
+	phone_id serial primary key,
+	contact_id integer REFERENCES contact,
+	phone_type varchar(25),
+	area_code integer,
+	number integer
+);
+
+
+
+
+DATE
+Date_id Contact_id Date_type Date
+CREATE TABLE date (
+	date_id serial primary key,
+	contact_id integer REFERENCES contact,
+	date_type varchar(25),
+	date date,
+);
+
+
