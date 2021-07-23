@@ -42,16 +42,18 @@ app.get('/searchcontacts', async (req, res) => {
 
 
 	
-	input = req.query.input.split(",")
+	input = req.query.input.split(", ")
 	console.log("input: ")
 	console.log(input)
 
-	let ids = []
 	let contacts = await contactSearch(input)
-
+	console.log('finished search, found contacts: ')
 	console.log(contacts)
 
-	res.json({ message: 'todo' });
+
+
+
+	res.json({ contacts: contacts });
 
 
 })
@@ -72,23 +74,21 @@ async function contactSearch(inputs) {
 	for (var i = 0; i < inputs.length; i++) {
 
 		if (typeof inputs[i] === 'string') {
-			console.log('string search')
 
 			input = inputs[i].toLowerCase();
-			//get contact ids for matching addresses
+			//search contacts by string columns
 			let result = await sql`
 				select distinct contact_id 
-				from contact
-				where
+				from contact where
 				fname = ${input} or
 				mname = ${input} or
-				lname = ${input} or
-				
+				lname = ${input}
 			`
 
 			ids.push(...result)
 
-			let result = await sql`
+			//search address by string columns
+			result = await sql`
 				select distinct contact_id 
 				from address
 				where
@@ -96,33 +96,35 @@ async function contactSearch(inputs) {
 				state = ${input} 
 			`
 
-			address = ${input} or
-				city = ${input} or
-				state = ${input} 
-			console.log('search by string results ')
-			console.log(results)
+			ids.push(...result)
 
-			console.log('got ids by string: ')
-			console.log(ids)
+
 
 
 		}
 
 		if (typeof input[i] === 'number') {
 
-			input = input.toLowerCase();
-			//get contact ids for matching addresses
+			//search address by int columns
 			let result = await sql`
 				select distinct contact_id 
-				address as a,
-				phone as p
+				from address 
 				where
-				zip = ${input} or
-				area_code = ${input} or
-				number = ${input} or
+				zip = ${input} 
 			`
 
 			ids.push(...result)
+
+			//search phone by int columns
+			result = await sql`
+				select distinct contact_id 
+				from phone 
+				where
+				area_code = ${input} or
+				number = ${input}
+			`
+			ids.push(...result)
+
 		}
 	}
 
@@ -136,14 +138,66 @@ async function contactSearch(inputs) {
 			contact_id = ${ids[i].contact_id}
 		`
 		contacts.push(result[0])
-
-
 	}
 
 	return contacts
 	
 
 }
+
+app.get('/getContactByID', async (req, res) => {
+
+	const sql = postgres({
+	  database	  : 'contact_list',
+	  host        : 'localhost',         // Postgres ip address or domain name
+	  port        : 5432,       // Postgres server port
+	  username    : 'contacts',         // Username of database user
+	  password    : 'contacts',         // Password of database user
+	  
+	})
+
+	let id = req.query.id
+	console.log("getContactByID fired with input id: " + id)
+
+	let contact = await sql`
+		select * 
+		from contact where
+		contact_id = ${id}
+	`
+	let addresses = await sql`
+		select * 
+		from address where
+		contact_id = ${id}
+	`
+	let numbers = await sql`
+		select * 
+		from phone where
+		contact_id = ${id}
+	`
+
+	let dates = await sql`
+		select * 
+		from date where
+		contact_id = ${id}
+	`
+	console.log(contact)
+	console.log(addresses)
+	console.log(numbers)
+	console.log(dates)
+
+	let friend = {
+		'contact': contact[0],
+		'addresses': addresses,
+		'numbers': numbers,
+		'dates': dates
+	}
+
+
+
+	res.json({ contact: friend });
+
+
+})
 
 
 
