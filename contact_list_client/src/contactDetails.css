@@ -1,0 +1,22 @@
+.col{
+    margin: 20px;
+    padding: 20px;
+    width: 100%;
+
+}
+
+.row{
+    flex-direction: row;
+}
+
+.header{
+     margin-top: 20px;
+
+     margin-bottom: 20px;
+ }
+
+.title{
+    margin-top: 10px;
+
+    margin-bottom: 10px;
+}
