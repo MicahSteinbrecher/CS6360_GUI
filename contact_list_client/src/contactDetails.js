@@ -10,7 +10,7 @@ export class ContactDetails extends React.Component {
         if (this.props.contactDetails == null) {
 
             return (
-                <div className="col">{'Contact Details'}
+                <div className="details">{'Contact Details'}
                 </div>
             );
         }
@@ -44,7 +44,7 @@ export class ContactDetails extends React.Component {
             });
 
             return (
-                <div className="col"> {'Contact Details'}
+                <div className="details"> {'Contact Details'}
 
                     <div className="header">
                         {c.contact.fname} {c.contact.mname} {c.contact.lname}

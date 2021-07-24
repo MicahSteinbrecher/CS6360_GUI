@@ -16,12 +16,33 @@ ol, ul {
 }
 
 .col{
+     margin: 20px;
+     padding: 20px;
+     width: 100%;
+     border-width: 1px;
+     border-color: black;
+     border-style: solid;
+ }
+
+.row{
     margin: 20px;
     padding: 20px;
     width: 100%;
+    height: 350px;
     border-width: 1px;
     border-color: black;
     border-style: solid;
+}
+
+.contacts{
+    margin: 20px;
+    padding: 20px;
+    width: 100%;
+    height: 700px;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    overflow: scroll;
 }
 
 .board-row:after {

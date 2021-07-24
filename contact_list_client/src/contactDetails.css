@@ -5,8 +5,9 @@
 
 }
 
-.row{
+.details{
     flex-direction: row;
+    height: 350px;
 }
 
 .header{

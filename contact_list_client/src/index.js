@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {getContacts, searchContacts, getContactByID} from './utilities';
 import './index.css';
 import {ContactDetails} from './contactDetails';
+import {AddContact} from './addContact';
 
 
 class Contacts extends React.Component {
@@ -42,7 +43,7 @@ class Contacts extends React.Component {
 
         return (
 
-            <div className="col">
+            <div className="contacts">
                 {'Contacts'}
 
                 <form onSubmit={(e)=>this.handleSubmit(e)}>
@@ -109,14 +110,17 @@ class App extends React.Component {
 
         return (
             <container className="container">
-                <Contacts className="col"
+                <Contacts
                           onSearch={(input) => this.handleSearch(input)}
                           onContactSelection={(id) => this.handleContactSelection(id)}
 
                           contacts={this.state.contacts} />
-                <ContactDetails className="col"
-                                contactDetails = {this.state.contactDetails}
-                />
+                <div className="col">
+                    <ContactDetails contactDetails = {this.state.contactDetails}
+                    />
+                    <AddContact
+                    />
+                </div>
             </container>
         );
     }
