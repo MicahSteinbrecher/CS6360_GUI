@@ -88,6 +88,45 @@ app.get('/getcontacts', async (req, res) => {
 
 })
 
+app.delete('/deletecontact', async (req, res) => {
+
+	const sql = postgres({
+	  database	  : 'contact_list',
+	  host        : 'localhost',         // Postgres ip address or domain name
+	  port        : 5432,       // Postgres server port
+	  username    : 'contacts',         // Username of database user
+	  password    : 'contacts',         // Password of database user
+	  
+	})
+
+	id = req.query.id
+	console.log('delete c fired')
+
+	await sql`
+				delete from date
+				where contact_id=${id}
+			`
+
+	await sql`
+			delete from address
+			where contact_id=${id}
+		`
+
+	await sql`
+			delete from phone
+			where contact_id=${id}
+		`
+	
+	await sql`
+			delete from contact
+			where contact_id=${id}
+		`
+	console.log('deleted contact')
+
+	res.json({ msg: 'success' });
+
+})
+
 app.get('/searchcontacts', async (req, res) => {
 
 	const sql = postgres({

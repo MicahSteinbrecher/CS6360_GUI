@@ -77,3 +77,24 @@ export async function addContact(contact) {
             }
         )
 }
+
+export async function deleteContact(id) {
+    const url = "http://localhost:3001/deleteContact?id=" + id;
+    return fetch(url, {
+        method: 'DELETE'
+    })
+        .then(res => res.json())
+        .then(
+            (result) => {
+                return result
+
+            },
+            // Note: it's important to handle errors here
+            // instead of a catch() block so that we don't swallow
+            // exceptions from actual bugs in components.
+            (error) => {
+                console.log('error')
+
+            }
+        )
+}

@@ -4,6 +4,10 @@ import './contactDetails.css';
 
 export class ContactDetails extends React.Component {
 
+    onDeleteContact() {
+        this.props.onDeleteContact(this.props.contactDetails.contact_id)
+    }
+
 
     render() {
 
@@ -46,6 +50,7 @@ export class ContactDetails extends React.Component {
             return (
                 <div className="details"> {'Contact Details'}
 
+
                     <div className="header">
                         {c.contact.fname} {c.contact.mname} {c.contact.lname}
                     </div>
@@ -64,6 +69,9 @@ export class ContactDetails extends React.Component {
                     <ul>
                         {dates}
                     </ul>
+                    <button type="button" onClick={()=>console.log('edit c fire')}>Edit Contact</button>
+                    <button type="button" onClick={()=>this.props.onDeleteContact(this.props.contactDetails.contact.contact_id)}>Delete Contact</button>
+
                 </div>
             );
         }

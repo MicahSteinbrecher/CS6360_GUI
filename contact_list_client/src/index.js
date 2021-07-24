@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {getContacts, searchContacts, getContactByID} from './utilities';
+import {getContacts, searchContacts, getContactByID, deleteContact} from './utilities';
 import './index.css';
 import {ContactDetails} from './contactDetails';
 import {AddContact} from './addContact';
@@ -106,6 +106,20 @@ class App extends React.Component {
         })
     }
 
+    async handleDeleteContact(id){
+        let res = await deleteContact(id);
+        let contacts = [ ...this.state.contacts ];
+        let result  = contacts.filter(function (c) {
+            return c.contact_id != id ;
+        });
+
+
+        this.setState({
+            contactDetails: null,
+            contacts: result
+        })
+    }
+
     render() {
 
         return (
@@ -117,6 +131,7 @@ class App extends React.Component {
                           contacts={this.state.contacts} />
                 <div className="col">
                     <ContactDetails contactDetails = {this.state.contactDetails}
+                                    onDeleteContact={(id)=>this.handleDeleteContact(id)}
                     />
                     <AddContact
                     />

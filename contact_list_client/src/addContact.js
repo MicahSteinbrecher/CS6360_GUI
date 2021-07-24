@@ -4,7 +4,7 @@ import {Name} from './name.js';
 import {Addresses} from './addresses.js';
 import {Numbers} from './numbers.js';
 import {Dates} from './dates.js';
-import {addContact} from './utilities.js'
+import {addContact, deleteContact} from './utilities.js'
 
 
 export class AddContact extends React.Component {
@@ -209,6 +209,7 @@ export class AddContact extends React.Component {
     handleAddContact(){
         addContact(this.state.newcontact)
     }
+
 
     render() {
 
