@@ -26,10 +26,46 @@ app.post('/addcontact', async (req, res) => {
 
 	console.log('add contacts fired: ')
 	console.log(JSON.stringify(req.body))
+	name = req.body.contact.name
+	addresses = req.body.contact.addresses
+	numbers = req.body.contact.numbers
+	dates = req.body.contact.dates
+
+
+	let contact = await sql`
+	  INSERT INTO contact(fname, mname, lname)
+		VALUES (${name.fname}, ${name.mname}, ${name.lname})
+		RETURNING *
+	`
+
+	let id = contact[0].contact_id
+	console.log(id)
 
 
 
-  	res.json({ message: 'todo' });
+	for (var i = 0; i < addresses.length; i++) {
+		a = addresses[i]
+		await sql`
+		  INSERT INTO address(contact_id, address_type, address, city, state, zip)
+			VALUES (${id}, ${a.address_type}, ${a.address}, ${a.city}, ${a.state}, ${a.zip})
+		`
+	}
+
+	for (var i = 0; i < numbers.length; i++) {
+		p = numbers[i]
+		await sql`
+		  INSERT INTO phone(contact_id, phone_type, area_code, number)
+			VALUES (${id}, ${p.phone_type}, ${p.area_code}, ${p.number})
+		`
+	}
+
+	for (var i = 0; i < dates.length; i++) {
+		d = dates[i]
+		await sql`
+		  INSERT INTO date(contact_id, date_type, date)
+			VALUES (${id}, ${d.date_type}, ${d.date})
+		`
+	}
 
 })
 
