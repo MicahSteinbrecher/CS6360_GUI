@@ -56,3 +56,24 @@ export async function getContactByID(id) {
             }
         )
 }
+
+export async function addContact(contact) {
+    const url = "http://localhost:3001/addContact";
+    return fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contact: contact })
+    })
+        .then(res => res.json())
+        .then(
+            (result) => {
+            },
+            // Note: it's important to handle errors here
+            // instead of a catch() block so that we don't swallow
+            // exceptions from actual bugs in components.
+            (error) => {
+                console.log('error')
+
+            }
+        )
+}

@@ -3,11 +3,35 @@ const app = express()
 const port = 3001
 const cors = require('cors');
 const postgres = require('postgres')
+const bodyParser = require("body-parser");
+
 
 
 
 app.use(cors());
 app.options('*', cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.post('/addcontact', async (req, res) => {
+
+	const sql = postgres({
+	  database	  : 'contact_list',
+	  host        : 'localhost',         // Postgres ip address or domain name
+	  port        : 5432,       // Postgres server port
+	  username    : 'contacts',         // Username of database user
+	  password    : 'contacts',         // Password of database user
+	  
+	})
+
+	console.log('add contacts fired: ')
+	console.log(JSON.stringify(req.body))
+
+
+
+  	res.json({ message: 'todo' });
+
+})
 
 app.get('/getcontacts', async (req, res) => {
 
