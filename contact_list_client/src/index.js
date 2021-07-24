@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {getContacts, searchContacts, getContactByID, deleteContact} from './utilities';
+import {getContacts, searchContacts, getContactByID, deleteContact, editContact} from './utilities';
 import './index.css';
 import {ContactDetails} from './contactDetails';
 import {AddContact} from './addContact';
+
 
 
 class Contacts extends React.Component {
@@ -120,6 +121,13 @@ class App extends React.Component {
         })
     }
 
+    async handleEdit(contact) {
+        let res = await editContact(contact)
+        this.setState({
+            contactDetails: contact
+        })
+    }
+
     render() {
 
         return (
@@ -132,6 +140,7 @@ class App extends React.Component {
                 <div className="col">
                     <ContactDetails contactDetails = {this.state.contactDetails}
                                     onDeleteContact={(id)=>this.handleDeleteContact(id)}
+                                    handleEdit={(contact)=>this.handleEdit(contact)}
                     />
                     <AddContact
                     />

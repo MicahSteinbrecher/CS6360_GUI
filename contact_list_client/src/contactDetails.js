@@ -1,15 +1,42 @@
 import React from "react";
 import './contactDetails.css';
+import {EditContact} from "./editContact";
 
 
 export class ContactDetails extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            edit: false,
+        }
+    }
 
     onDeleteContact() {
         this.props.onDeleteContact(this.props.contactDetails.contact_id)
     }
 
+    handleEdit(contact){
+        this.props.handleEdit(contact)
+        this.setState({
+            edit: false
+        })
+    }
+
 
     render() {
+
+        if (this.state.edit){
+            return (
+                <div className="details">{'Edit Contact'}
+                    <EditContact contact={this.props.contactDetails}
+                                 handleEdit={(contact)=>this.handleEdit(contact)}
+
+
+                    />
+                </div>
+            );
+        }
 
         if (this.props.contactDetails == null) {
 
@@ -69,7 +96,7 @@ export class ContactDetails extends React.Component {
                     <ul>
                         {dates}
                     </ul>
-                    <button type="button" onClick={()=>console.log('edit c fire')}>Edit Contact</button>
+                    <button type="button" onClick={()=>{this.setState({edit: true})}}>Edit Contact</button>
                     <button type="button" onClick={()=>this.props.onDeleteContact(this.props.contactDetails.contact.contact_id)}>Delete Contact</button>
 
                 </div>
