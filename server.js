@@ -266,8 +266,13 @@ async function contactSearch(inputs) {
 	contacts = []
 
 	for (var i = 0; i < inputs.length; i++) {
+		let isNum = /^\d+$/.test(input[i]);
 
-		if (typeof inputs[i] === 'string') {
+
+
+
+		if (!isNum) {
+			console.log('fire')
 
 			input = inputs[i].toLowerCase();
 			//search contacts by string columns
@@ -286,6 +291,7 @@ async function contactSearch(inputs) {
 				select distinct contact_id 
 				from address
 				where
+				address = ${input} or
 				city = ${input} or
 				state = ${input} 
 			`
@@ -297,7 +303,8 @@ async function contactSearch(inputs) {
 
 		}
 
-		if (typeof input[i] === 'number') {
+		else {
+
 
 			//search address by int columns
 			let result = await sql`
@@ -309,6 +316,8 @@ async function contactSearch(inputs) {
 
 			ids.push(...result)
 
+
+
 			//search phone by int columns
 			result = await sql`
 				select distinct contact_id 
@@ -317,6 +326,10 @@ async function contactSearch(inputs) {
 				area_code = ${input} or
 				number = ${input}
 			`
+			console.log('result')
+
+
+			console.log(result)
 			ids.push(...result)
 
 		}

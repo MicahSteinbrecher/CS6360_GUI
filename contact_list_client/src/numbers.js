@@ -27,7 +27,7 @@ export class Numbers extends React.Component {
 
         return (
             <div>
-                <h4>Addresses </h4>
+                <h4>Numbers </h4>
                 {numbers}
                 <button type="button" onClick={()=>this.props.addNumber()}>Add Number</button>
             </div>
